@@ -19,7 +19,8 @@ public:
         int tmp = val;
         string str = "";
         for(int i = 0; i < k; i ++){
-            str = string(1, tmp % 256) + str;
+            int foo = tmp % 256 - 128;
+            str = string(1, char(foo)) + str;
             tmp /= 256;
         }
         return str;
@@ -29,7 +30,7 @@ public:
         int tmp = 0, ptr = 0;
         while(ptr < str.length()){
             tmp *= 256;
-            tmp += str[ptr++];
+            tmp += (char)str[ptr++] + 128;
         }//end while
         return tmp;
     }
@@ -57,7 +58,6 @@ public:
     
     void deserial_build(string str, TreeNode* root){
         root -> val = ctoi(str.substr(0,4));
-        
         int leftct = ctoi(str.substr(4,4));
         int rightct = ctoi(str.substr(8,4));
        // root -> val += leftct + rightct;
