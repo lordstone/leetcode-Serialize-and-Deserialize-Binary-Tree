@@ -18,21 +18,34 @@ public:
     string itoc(int val, int k){
         int tmp = val;
         string str = "";
-        for(int i = 0; i < k; i ++){
+        int endp = 0;
+        bool flag = false;
+        if(tmp < 0) {
+            tmp = -tmp;
+            endp = 1;
+            flag = true;
+        }
+        for(int i = 0; i < k - endp; i ++){
             int foo = tmp % 256 - 128;
             str = string(1, char(foo)) + str;
             tmp /= 256;
         }
+        if(flag) str = string(1,127) + str;
         return str;
     }
     
     int ctoi(string str){
         int tmp = 0, ptr = 0;
+        int sign = 1;
+        if(str[0] == 127){
+            sign = -1;
+            ptr ++;
+        }
         while(ptr < str.length()){
             tmp *= 256;
             tmp += (char)str[ptr++] + 128;
         }//end while
-        return tmp;
+        return tmp * sign;
     }
     
     int serial_push(string *str, TreeNode* root){
